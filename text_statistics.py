@@ -17,7 +17,7 @@ def is_number(s):
 class EasyWordList(object):
     """Object containing Dale-Chall list of easy words."""
     
-    def __init__(self, file='./dale_words_all.txt'):
+    def __init__(self, file='./dalechall.txt'):
         self.list = open(file, 'r').read().splitlines()
         
 class TextReplacements(object):
