@@ -17,13 +17,13 @@ def is_number(s):
 class EasyWordList(object):
     """Object containing Dale-Chall list of easy words."""
     
-    def __init__(self, file='/Users/erinhengel/Dropbox/Thesis/Readability/dta/dale_words_all.txt'):
+    def __init__(self, file='./dale_words_all.txt'):
         self.list = open(file, 'r').read().splitlines()
         
 class TextReplacements(object):
     """Object containing text replacements."""
     
-    def __init__(self, file='/Users/erinhengel/Dropbox/Thesis/Readability/dta/replacements.txt'):
+    def __init__(self, file='./replacements.txt'):
         with open(file, 'r') as fh:
             self.list = list(csv.reader(fh))
 
