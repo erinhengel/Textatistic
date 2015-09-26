@@ -1,12 +1,15 @@
-# text_statistics
+# Introduction
 text_statistics is a simple program to calculate the following readability statistics:
+
 1. Flesch Reading Ease
 2. Flesch-Kincaid
 3. Gunning Fog
 4. SMOG
 5. Dale-Chall
 
+# Other functions
 Additionally, it offers several text processing functions:
+
 1.  abbrv\_strip: replace abbreviations with the full text versions in abbreviations.txt
 2.  decimal\_strip: strip decimals out of numbers and replace with 0
 3.  punct\_strip: strip out punctuation
