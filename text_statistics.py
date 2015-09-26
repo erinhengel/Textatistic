@@ -21,7 +21,7 @@ class EasyWordList(object):
         self.list = open(file, 'r').read().splitlines()
         
 class TextReplacements(object):
-    """Object containing text replacements."""
+    """Object containing abbreviations & their replacements."""
     
     def __init__(self, file='./abbreviations.txt'):
         with open(file, 'r') as fh:
