@@ -12,7 +12,7 @@ text_statistics is a simple program to calculate the following readability stati
 1.  `abbrv_strip`: replace abbreviations with the full text versions (`abbreviations.txt`)
 2.  `decimal_strip`: strip decimals out of numbers and replace with 0
 3.  `punct_strip`: strip out punctuation
-4.  `eriod_strip`: strip out all full stops
+4.  `period_strip`: strip out all full stops
 5.  `sentence_count`: return number of sentences
 6.  `character_count`: return number of non-punctuation characters
 7.  `word_count`: return number of words
