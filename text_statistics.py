@@ -23,7 +23,7 @@ class EasyWordList(object):
 class TextReplacements(object):
     """Object containing text replacements."""
     
-    def __init__(self, file='./replacements.txt'):
+    def __init__(self, file='./abbreviations.txt'):
         with open(file, 'r') as fh:
             self.list = list(csv.reader(fh))
 
