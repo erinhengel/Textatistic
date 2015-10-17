@@ -58,7 +58,6 @@ class TextStatistic(object):
 def abbrv_strip(text, replacements):
     for item in replacements.list:
         text = text.replace(*item)
-        
     return text
 
 
