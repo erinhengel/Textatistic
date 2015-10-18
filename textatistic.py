@@ -17,7 +17,7 @@ def is_number(s):
 class EasyWordList(object):
     """Object containing Dale-Chall list of easy words."""
     
-    def __init__(self, file='./dalechall.txt'):
+    def __init__(self, file='./dale_chall.txt'):
         self.list = open(file, 'r').read().splitlines()
         
 class TextReplacements(object):
@@ -28,69 +28,82 @@ class TextReplacements(object):
             self.list = list(csv.reader(fh))
 
 
-class TextStatistic(object):
+class Textatistic(object):
     """Object containing every text statistic and readability score."""
-    def __init__(self, text, easy_words=EasyWordList(), replacements=TextReplacements(), hyphen=Hyphenator('en_US')):
+    def __init__(self, text, replacements=TextReplacements(), hyphen=Hyphenator('en_US'), easy_words=EasyWordList()):
             
-        text = period_strip(text, replacements)
-        self.sentence_count = sentence_count(text, True)
-        self.character_count = character_count(text, True)
+        text = nonend_strip(text, replacements)
+        self.sent_count = sent_count(text, replacements, True)
+        self.char_count = char_count(text, replacements, True)
         
-        text = punct_strip(text)
-        self.word_count = word_count(text, True)
-        self.dalechall_count = dalechall_count(text, easy_words, True)
+        text = word_array(text, replacements, True)
+        self.word_count = word_count(text, replacements, True)
+        self.dale_chall_list_count = dale_chall_list_count(text, replacements, easy_words, True)
         
-        syllable_list = syllable_counts(text, hyphen, True)
-        self.syllable_count = syllable_list['syllable_count']
-        self.polysyllableword_count = syllable_list['polysyllableword_count']
+        sybl_list = sybl_count(text, replacements, hyphen, True)
+        self.sybl_count = sybl_list['sybl_count']
+        self.poly_sybl_word_count = sybl_list['poly_sybl_word_count']
         
-        params = {'word_c':self.word_count, 'sentence_c':self.sentence_count, 'syllable_c':self.syllable_count, 'dalechall_c': self.dalechall_count, 'polysyllableword_c':self.polysyllableword_count}
-        self.flesch_score = flesch_score(vars=params)
-        self.fleschkincaid_score = fleschkincaid_score(vars=params)
-        self.fog_score = fog_score(vars=params)
-        self.smog_score = smog_score(vars=params)
-        self.dalechall_score = dalechall_score(vars=params)
+        params = {'word': self.word_count, 'sentence': self.sent_count, 'syllable': self.sybl_count, 'dale_chall_list': self.dale_chall_list_count, 'poly_sybl_word': self.poly_sybl_word_count}
+        self.counts = params
+        
+        self.flesch = flesch(vars=params)
+        self.flesch_kincaid = flesch_kincaid(vars=params)
+        self.gunning_fog = gunning_fog(vars=params)
+        self.smog = smog(vars=params)
+        self.dale_chall = dale_chall(vars=params)
+        
+        self.scores = {'flesch': self.flesch, 'flesch_kincaid': self.flesch_kincaid, 'gunning_fog': self.gunning_fog, 'smog': self.smog, 'dale_chall': self.dale_chall}
     
     def dict(self):
         return self.__dict__
 
 
-def abbrv_strip(text, replacements):
+def abbrv_strip(text, replacements=TextReplacements()):
     for item in replacements.list:
-        text = text.replace(*item)
+        if item[0][:2] == "r'":
+            text = re.compile(item[0][2:-1]).sub(item[1], text)
+        else:
+            text = text.replace(*item)
     return text
 
 
 def decimal_strip(text):
     return re.sub("\.[0-9]", "00", text)
-    
-    
-def punct_strip(text):
-    return text.replace("-", ' ').translate(str.maketrans("", "", string.punctuation)).split()
 
 
-def period_strip(text, replacements):
+def nonend_strip(text, replacements=TextReplacements()):
     text = decimal_strip(text)
     return abbrv_strip(text, replacements)
     
+    
+def word_array(text, replacements=TextReplacements(), prepped=False):
+    if not prepped:
+        text = abbrv_strip(text, replacements)
+    return text.replace("-", ' ').translate(str.maketrans("", "", string.punctuation)).split()
+    
 
-def sentence_count(text, prepped=False):
-    if not prepped: text = period_strip(text)
+def sent_count(text, replacements=TextReplacements(), prepped=False):
+    if not prepped:
+        text = nonend_strip(text, replacements)
     return text.count('.') + text.count('!') + text.count('?')
 
 
-def character_count(text, prepped=False):
-    if not prepped: text = period_strip(text)
+def char_count(text, replacements=TextReplacements(), prepped=False):
+    if not prepped:
+        text = nonend_strip(text, replacements)
     return len(''.join(text.split()))
 
 
-def word_count(text, prepped=False):
-    if not prepped: text = punct_strip(period_strip(text))
+def word_count(text, replacements=TextReplacements(), prepped=False):
+    if not prepped:
+        text = word_array(nonend_strip(text, replacements), replacements, prepped=True)
     return len(text)
 
 
-def dalechall_count(text, easy_words, prepped=False):
-    if not prepped: text = punct_strip(period_strip(text))
+def dale_chall_list_count(text, replacements=TextReplacements(), easy_words=EasyWordList(), prepped=False):
+    if not prepped:
+        text = word_array(nonend_strip(text, replacements), replacements, True)
     difficult = 0
     for word in text:
         word = word.lower()
@@ -102,74 +115,90 @@ def dalechall_count(text, easy_words, prepped=False):
     return difficult
 
 
-def syllableperword_count(word, hyphen):
+def syblperword_count(word, hyphen=Hyphenator('en_US')):
     return max(1, len(hyphen.syllables(word)))
 
 
-def syllable_counts(text, hyphen, prepped=False):
-    if not prepped: text = punct_strip(period_strip(text))
-    syllable_count = 0
-    polysyllableword_count = 0
+def sybl_count(text, replacements=TextReplacements(), hyphen=Hyphenator('en_US'), prepped=False):
+    if not prepped:
+        text = word_array(nonend_strip(text, replacements), replacements, True)
+    sybl_count = 0
+    poly_sybl_word_count = 0
     for word in text:
-        syllableperword_c = syllableperword_count(word, hyphen)
-        syllable_count += syllableperword_c
-        if syllableperword_c >= 3: polysyllableword_count += 1
-    return {'syllable_count': syllable_count, 'polysyllableword_count': polysyllableword_count}
+        syblperword_c = syblperword_count(word, hyphen)
+        sybl_count += syblperword_c
+        if syblperword_c >= 3: poly_sybl_word_count += 1
+    return {'sybl_count': sybl_count, 'poly_sybl_word_count': poly_sybl_word_count}
 
 
-def flesch_score(text=None, hyphen=None, vars=None):
+def flesch(text=None, replacements=None, hyphen=None, vars={}):
     if text:
-        text = period_strip(text)
-        vars['sentence_c'] = sentence_count(text, True)
-        text = punct_strip(text)
-        vars['word_c'] = word_count(text, True)
-        vars['syllable_c'] = syllable_counts(text, hyphen, True)['syllable_count']
+        if not replacements:
+            replacements = TextReplacements()
+        if not hyphen:
+            hyphen = Hyphenator('en_US')        
+        text = nonend_strip(text, replacements)
+        vars['sentence'] = sent_count(text, replacements, True)
+        text = word_array(text, replacements, True)
+        vars['word'] = word_count(text, replacements, True)
+        vars['syllable'] = sybl_count(text, replacements, hyphen, True)['sybl_count']
+    return 206.835 - 1.015 * (vars['word'] / vars['sentence']) - 84.6 * (vars['syllable'] / vars['word'])
 
-    return 206.835 - 1.015 * (vars['word_c'] / vars['sentence_c']) - 84.6 * (vars['syllable_c'] / vars['word_c'])
 
-
-def fleschkincaid_score(text=None, hyphen=None, vars=None):
+def flesch_kincaid(text=None, replacements=None, hyphen=None, vars={}):
     if text:
-        text = period_strip(text)
-        vars['sentence_c'] = sentence_count(text, True)
-        text = punct_strip(text)
-        vars['word_c'] = word_count(text, True)
-        vars['syllable_c'] = syllable_counts(text, hyphen, True)['syllable_count']
-
-    return 0.39 * (vars['word_c'] / vars['sentence_c']) + 11.8 * (vars['syllable_c'] / vars['word_c']) - 15.59
+        if not replacements:
+            replacements = TextReplacements()
+        if not hyphen:
+            hyphen = Hyphenator('en_US')        
+        text = nonend_strip(text, replacements)
+        vars['sentence'] = sent_count(text, replacements, True)
+        text = word_array(text, replacements, True)
+        vars['word'] = word_count(text, replacements, True)
+        vars['syllable'] = sybl_count(text, replacements, hyphen, True)['sybl_count']
+    return 0.39 * (vars['word'] / vars['sentence']) + 11.8 * (vars['syllable'] / vars['word']) - 15.59
     
     
-def fog_score(text=None, hyphen=None, vars=None):
+def gunning_fog(text=None, replacements=None, hyphen=None, vars={}):
     if text:
-        text = period_strip(text)
-        vars['sentence_c'] = sentence_count(text, True)
-        text = punct_strip(text)
-        vars['word_c'] = word_count(text, True)
-        vars['polysyllableword_c'] = syllable_counts(text, hyphen, True)['polysyllableword_count']
-
-    return 0.4 * ((vars['word_c'] / vars['sentence_c']) + 100 * (vars['polysyllableword_c'] / vars['word_c']))
+        if not replacements:
+            replacements = TextReplacements()
+        if not hyphen:
+            hyphen = Hyphenator('en_US')        
+        text = nonend_strip(text, replacements)
+        vars['sentence'] = sent_count(text, replacements, True)
+        text = word_array(text, replacements, True)
+        vars['word'] = word_count(text, replacements, True)
+        vars['poly_sybl_word'] = sybl_count(text, replacements, hyphen, True)['poly_sybl_word_count']
+    return 0.4 * ((vars['word'] / vars['sentence']) + 100 * (vars['poly_sybl_word'] / vars['word']))
     
     
-def smog_score(text=None, hyphen=None, vars=None):
+def smog(text=None, replacements=None, hyphen=None, vars={}):
     if text:
-        text = period_strip(text)
-        vars['sentence_c'] = sentence_count(text, True)
-        text = punct_strip(text)
-        vars['polysyllableword_c'] = syllable_counts(text, hyphen, True)['polysyllableword_count']
-
-    return 1.0430 * sqrt(vars['polysyllableword_c'] * (30 / vars['sentence_c'])) + 3.1291
+        if not replacements:
+            replacements = TextReplacements()
+        if not hyphen:
+            hyphen = Hyphenator('en_US')
+        text = nonend_strip(text, replacements)
+        vars['sentence'] = sent_count(text, replacements, True)
+        text = word_array(text, replacements, True)
+        vars['poly_sybl_word'] = sybl_count(text, replacements, hyphen, True)['poly_sybl_word_count']
+    return 1.0430 * sqrt(vars['poly_sybl_word'] * (30 / vars['sentence'])) + 3.1291
     
     
-def dalechall_score(text=None, easy_words=None, vars=None):
+def dale_chall(text=None, replacements=None, easy_words=None, vars={}):
     if text:
-        text = period_strip(text)
-        vars['sentence_c'] = sentence_count(text, True)
-        text = punct_strip(text)
-        vars['word_c'] = word_count(text, True)
-        vars['dalechall_c'] = dalechall_count(text, easy_words, True)
-    
-    vars['cons'] = 0
-    if vars['dalechall_c'] / vars['word_c'] > 0.05: vars['cons'] = 3.6365
-        
-    return vars['cons'] + 0.1579 * (vars['dalechall_c'] / vars['word_c']) * 100 + 0.0496 * (vars['word_c'] / vars['sentence_c'])
+        if not replacements:
+            replacements = TextReplacements()
+        if not easy_words:
+            easy_words = EasyWordList()
+        text = nonend_strip(text, replacements)
+        vars['sentence'] = sent_count(text, replacements, True)
+        text = word_array(text, replacements, True)
+        vars['word'] = word_count(text, replacements, True)
+        vars['dale_chall_list'] = dale_chall_list_count(text, replacements, easy_words, True)
+    cons = 0
+    if vars['dale_chall_list'] / vars['word'] > 0.05:
+        cons = 3.6365
+    return cons + 0.1579 * (vars['dale_chall_list'] / vars['word']) * 100 + 0.0496 * (vars['word'] / vars['sentence'])
 
