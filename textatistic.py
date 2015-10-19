@@ -16,7 +16,7 @@ class EasyWordList(object):
 class TextReplacements(object):
     """Object containing abbreviations & their replacements."""
     
-    def __init__(self, file='./abbreviations.txt'):
+    def __init__(self, file='./replacements.txt'):
         with open(file, 'r') as fh:
             self.list = list(csv.reader(fh))
 
