@@ -1,18 +1,11 @@
 #!/usr/bin/python
 
-from hyphen import Hyphenator, dict_info
 import string
 import re
 import csv
 from math import sqrt
+from hyphen import Hyphenator
 
-
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
 
 class EasyWordList(object):
     """Object containing Dale-Chall list of easy words."""
@@ -44,16 +37,27 @@ class Textatistic(object):
         self.sybl_count = sybl_list['sybl_count']
         self.poly_sybl_word_count = sybl_list['poly_sybl_word_count']
         
-        params = {'word': self.word_count, 'sentence': self.sent_count, 'syllable': self.sybl_count, 'dale_chall_list': self.dale_chall_list_count, 'poly_sybl_word': self.poly_sybl_word_count}
-        self.counts = params
+        self.counts = {
+            'word': self.word_count,
+            'sentence': self.sent_count,
+            'syllable': self.sybl_count,
+            'dale_chall_list': self.dale_chall_list_count,
+            'poly_sybl_word': self.poly_sybl_word_count
+        }
         
-        self.flesch = flesch(vars=params)
-        self.flesch_kincaid = flesch_kincaid(vars=params)
-        self.gunning_fog = gunning_fog(vars=params)
-        self.smog = smog(vars=params)
-        self.dale_chall = dale_chall(vars=params)
+        self.flesch = flesch(vars=self.counts)
+        self.flesch_kincaid = flesch_kincaid(vars=self.counts)
+        self.gunning_fog = gunning_fog(vars=self.counts)
+        self.smog = smog(vars=self.counts)
+        self.dale_chall = dale_chall(vars=self.counts)
         
-        self.scores = {'flesch': self.flesch, 'flesch_kincaid': self.flesch_kincaid, 'gunning_fog': self.gunning_fog, 'smog': self.smog, 'dale_chall': self.dale_chall}
+        self.scores = {
+            'flesch': self.flesch,
+            'flesch_kincaid': self.flesch_kincaid,
+            'gunning_fog': self.gunning_fog,
+            'smog': self.smog,
+            'dale_chall': self.dale_chall
+        }
     
     def dict(self):
         return self.__dict__
@@ -107,7 +111,9 @@ def dale_chall_list_count(text, replacements=TextReplacements(), easy_words=Easy
     difficult = 0
     for word in text:
         word = word.lower()
-        if not is_number(word):
+        try:
+            float(word)
+        except ValueError:
             try:
                 easy_words.list.index(word)
             except ValueError:
@@ -200,5 +206,5 @@ def dale_chall(text=None, replacements=None, easy_words=None, vars={}):
     cons = 0
     if vars['dale_chall_list'] / vars['word'] > 0.05:
         cons = 3.6365
-    return cons + 0.1579 * (vars['dale_chall_list'] / vars['word']) * 100 + 0.0496 * (vars['word'] / vars['sentence'])
+    return cons + 15.79 * (vars['dale_chall_list'] / vars['word']) + 0.0496 * (vars['word'] / vars['sentence'])
 
