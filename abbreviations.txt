@@ -21,5 +21,3 @@
 " ff."," folio"
 "Dr.","Doctor"
 "viz.","videlicet"
-"co-","co"
-"Co-","Co"

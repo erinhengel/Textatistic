@@ -14,10 +14,10 @@ class EasyWordList(object):
     def __init__(self, file='./dale_chall.txt'):
         self.list = open(file, 'r').read().splitlines()
         
-class TextReplacements(object):
+class Abbreviations(object):
     """Object containing abbreviations & their replacements."""
     
-    def __init__(self, file='./replacements.txt', append=None, modify=None, remove=None):
+    def __init__(self, file='./abbreviations.txt', append=None, modify=None, remove=None):
         with open(file, 'r') as fh:
             self.list = list(csv.reader(fh))
         if append:
@@ -33,7 +33,7 @@ class TextReplacements(object):
 
 class Textatistic(object):
     """Object containing every text statistic and readability score."""
-    def __init__(self, text, replacements=TextReplacements(), hyphen=Hyphenator('en_US'), easy_words=EasyWordList()):
+    def __init__(self, text, replacements=Abbreviations(), hyphen=Hyphenator('en_US'), easy_words=EasyWordList()):
             
         text = punct_clean(text, replacements)
         self.sent_count = sent_count(text, replacements, True)
@@ -76,10 +76,17 @@ def dash_clean(text):
     text = text.replace("–", "-")
     text = text.replace("—", "-")
     return text
+    
+def hyphen_single(text, prepped=False):
+    if not prepped:
+        text = dash_clean(text)
+    text = text.replace("co-", "co")
+    text = text.replace("Co-", "Co")
+    return text
 
 
 def decimal_strip(text):
-    return re.sub("\.[0-9]", "00", text)
+    return re.sub("\.([0-9])", "+\\1", text)
     
 
 def nonend_strip(text):
@@ -88,7 +95,7 @@ def nonend_strip(text):
     return text
 
 
-def abbrv_strip(text, replacements=TextReplacements()):
+def abbrv_strip(text, replacements=Abbreviations()):
     for item in replacements.list:
         if item[0][:2] in ["r'", 'r"']:
             text = re.compile(item[0][2:-1]).sub(item[1], text)
@@ -97,38 +104,39 @@ def abbrv_strip(text, replacements=TextReplacements()):
     return text
 
 
-def punct_clean(text, replacements=TextReplacements()):
+def punct_clean(text, replacements=Abbreviations()):
     text = dash_clean(text)
+    text = hyphen_single(text, prepped=True)
     text = decimal_strip(text)
     text = nonend_strip(text)
     return abbrv_strip(text, replacements)
     
     
-def word_array(text, replacements=TextReplacements(), prepped=False):
+def word_array(text, replacements=Abbreviations(), prepped=False):
     if not prepped:
-        text = abbrv_strip(text, replacements)
+        text = punct_clean(text, replacements)
     return text.replace("-", ' ').translate(str.maketrans("", "", string.punctuation)).split()
     
 
-def sent_count(text, replacements=TextReplacements(), prepped=False):
+def sent_count(text, replacements=Abbreviations(), prepped=False):
     if not prepped:
         text = punct_clean(text, replacements)
     return text.count('.') + text.count('!') + text.count('?')
 
 
-def char_count(text, replacements=TextReplacements(), prepped=False):
+def char_count(text, replacements=Abbreviations(), prepped=False):
     if not prepped:
         text = punct_clean(text, replacements)
     return len(''.join(text.split()))
 
 
-def word_count(text, replacements=TextReplacements(), prepped=False):
+def word_count(text, replacements=Abbreviations(), prepped=False):
     if not prepped:
         text = word_array(punct_clean(text, replacements), replacements, prepped=True)
     return len(text)
 
 
-def dale_chall_list_count(text, replacements=TextReplacements(), easy_words=EasyWordList(), prepped=False):
+def dale_chall_list_count(text, replacements=Abbreviations(), easy_words=EasyWordList(), prepped=False):
     if not prepped:
         text = word_array(punct_clean(text, replacements), replacements, True)
     difficult = 0
@@ -148,7 +156,7 @@ def syblperword_count(word, hyphen=Hyphenator('en_US')):
     return max(1, len(hyphen.syllables(word)))
 
 
-def sybl_count(text, replacements=TextReplacements(), hyphen=Hyphenator('en_US'), prepped=False):
+def sybl_count(text, replacements=Abbreviations(), hyphen=Hyphenator('en_US'), prepped=False):
     if not prepped:
         text = word_array(punct_clean(text, replacements), replacements, True)
     sybl_count = 0
@@ -163,7 +171,7 @@ def sybl_count(text, replacements=TextReplacements(), hyphen=Hyphenator('en_US')
 def flesch(text=None, replacements=None, hyphen=None, vars={}):
     if text:
         if not replacements:
-            replacements = TextReplacements()
+            replacements = Abbreviations()
         if not hyphen:
             hyphen = Hyphenator('en_US')        
         text = punct_clean(text, replacements)
@@ -177,7 +185,7 @@ def flesch(text=None, replacements=None, hyphen=None, vars={}):
 def flesch_kincaid(text=None, replacements=None, hyphen=None, vars={}):
     if text:
         if not replacements:
-            replacements = TextReplacements()
+            replacements = Abbreviations()
         if not hyphen:
             hyphen = Hyphenator('en_US')        
         text = punct_clean(text, replacements)
@@ -191,7 +199,7 @@ def flesch_kincaid(text=None, replacements=None, hyphen=None, vars={}):
 def gunning_fog(text=None, replacements=None, hyphen=None, vars={}):
     if text:
         if not replacements:
-            replacements = TextReplacements()
+            replacements = Abbreviations()
         if not hyphen:
             hyphen = Hyphenator('en_US')        
         text = punct_clean(text, replacements)
@@ -205,7 +213,7 @@ def gunning_fog(text=None, replacements=None, hyphen=None, vars={}):
 def smog(text=None, replacements=None, hyphen=None, vars={}):
     if text:
         if not replacements:
-            replacements = TextReplacements()
+            replacements = Abbreviations()
         if not hyphen:
             hyphen = Hyphenator('en_US')
         text = punct_clean(text, replacements)
@@ -218,7 +226,7 @@ def smog(text=None, replacements=None, hyphen=None, vars={}):
 def dale_chall(text=None, replacements=None, easy_words=None, vars={}):
     if text:
         if not replacements:
-            replacements = TextReplacements()
+            replacements = Abbreviations()
         if not easy_words:
             easy_words = EasyWordList()
         text = punct_clean(text, replacements)
