@@ -1,4 +1,4 @@
-### [Software](/software/index.php "Software") \> Textatistic \> README
+#### Motivation
 
 Most programs that calculate readability scores rely on unclear, inconsistent and possibly inaccurate algorithms to count words, sentences and syllables and determine whether a word is on Dale-Chall's easy word list. Additionally, features of the text—particularly full stops used in abbreviations and decimals in numbers—frequently underestimate average words per sentence and syllables per word.
 
@@ -56,12 +56,14 @@ Every statistic contained in `s` can be similarly printed. The table below lists
 - `word_array`: array of words (stripped of all punctuation)
 
 `s.dict()` returns a dictionary containing all statistics in Table X. Call `scores` and `counts` to return dictionaries of only the readability scores and word/syllable/character counts, respectively:
+
 	>>> s.counts
 	{'dale_chall_list': 5, 'sentence': 2, 'poly_sybl_word': 1, 'word': 77, 'syllable': 85}
 
 #### Calling individual functions
 
-Instead of returning an object with all statistics calculated by `Textatistic`, you can icall them separately. For example, to find just the word count:
+Instead of returning an object with all statistics calculated by `Textatistic`, you can call them separately. For example, to find just the word count:
+
 	>>> import textatistic
 	>>> textatistic.word_count('This is a joke, right?')
 	5
@@ -69,6 +71,7 @@ Instead of returning an object with all statistics calculated by `Textatistic`, 
 Note, however, that calling `Textatistic` is more efficient than individually calling each function if you need more than one or two different readability scores. This could save substantial time if you're evaluating a large number of text samples.
 
 All five readability functions can take the actual word, syllable, etc. counts needed to calculate them as inputs. For example, if you knew a passage of text had 35 words, three sentences and 62 syllables, pass those values in a dictionary directly to `flesch` instead of the text itself:
+
 	params = {'word': 35, 'sentence': 3, 'syllable': 62}
 	>>> textatistic.flesch(vars=params)
 	45.1304761904762
@@ -76,10 +79,12 @@ All five readability functions can take the actual word, syllable, etc. counts n
 #### Hyphenator
 
 `Textatistic` counts syllables using the Python module `PyHyphen`, itself based on the C library `libhyphen`. `libhyphen` is used by TeX's typesetting system and in most open source text processing software, including [OpenOffice](http://www.openoffice.org "OpenOffice"). By default, `Textatistic` uses PyHyphen's American English Hyphenator. To change the locale, manually import `PyHyphen`'s `Hyphenator` class and call and object of it with the desired location/language, e.g.:
+
 	>>> from hyphen import Hyphenator
 	>>> nz = Hyphenator('en_nz')
 
 For all `Textatistic` functions, simply indicate you want to use a different Hyphenator with the `hyphen` argument:
+
 	textatistic.word_count('This is a short sentence.', hypen=nz)
 
 See [PyHyphen's documentation](https://pypi.python.org/pypi/PyHyphen/ "PyHyphen documentation") for instructions on downloading and installing additional dictionaries---including those in other languages. Note, however, that readability tests were created for and tested on American English. The components which determine sentence complexity in one language may be very different to those in another---thus reducing (or eliminating) scores' accuracy. Also, the Dale-Chall function should only be used with American English text, since the list it depends on to determine "hard words" is itself only in American English.
@@ -87,6 +92,7 @@ See [PyHyphen's documentation](https://pypi.python.org/pypi/PyHyphen/ "PyHyphen 
 #### Abbreviations
 
 To determine sentence count, `Textatistic` replaces common abbreviations with their full text---otherwise the periods they use would over estimate sentence counts. The file `abbreviations.txt`, stored in the package contents, maintains an explicit list of all such text replacements. To view the contents of that file, import the `Abbreviations` class from `Textatistic`, create an `Abbreviations` object and  list its contents:
+
 	>>> from textatistic import Abbreviations
 	>>> abbr = Abbreviations()
 	>>> abbr.list
@@ -99,14 +105,17 @@ The list is specific to my own work---particularly the abbreviation replacements
 Note also that this list replaces abbreviations with their entire text only if those abbreviations are marked with full stops. Thus, U.S. is replaced with United States but US is not. If you are using `Textatistic` in a relative analysis of text samples and they all use one or the other, this should be fine; if, on the other hand, your text samples sometimes use U.S. and other times US, add US to the list of replacements or manually change the samples to make them uniform.
 
 To add abbreviation replacements, simply provide them as a list of lists using the `append` keyword argument---making sure to follow the order described above: the first element of each inner list is the text to be replaced, the second the text that will replace it. The following example adds two pointless substitutions:
+
 	adds = [['dog', 'cat'], ['mouse', 'elephant']]
 	>>> abbr = Abbreviations(append=adds)
 
 As when using your own `Hyphenator` object, indicate the new `TextReplacement` object you wish to use in all `Textatistic` functions, this time with the `abbreviations` argument:
+
 	>>> text = 'One is a word. Two is a number.'
 	>>> s = Textatistic(text, abbreviations=abbr)
 
 Should you wish to modify an existing text substitution---for example, replace `e.g.` with `eg` instead of `'example gratis'`---use the `modify` keyword. Similarly, to remove a substitution, use `remove`:
+
 	>>> mods = [['e.g.', 'eg']]
 	>>> dels = [['U. K.', 'United Kingdom']]
 	>>> abbr = Abbreviations(modify=mods, remove=dels)
@@ -114,14 +123,18 @@ Should you wish to modify an existing text substitution---for example, replace `
 When these replacements are actually made in the evaluated text, they are done so in order. Items are appended to the end of the list, but those only modified remain in their original order. Thus, simply appending `['e.g.', 'eg']` won't have any effect on replacements---because they've already been replaced by `'exampli gratia' `.
 
 It is also possible to add regular expressions in lieu of the exact text to be replaced. When doing so, indicate the regular expressions using precisely the same syntax employed by `re.sub()`---only make sure to preface the string with `r` (otherwise optional for `re.sub()`). For example, to append the regular expression `([a-z]\.){4}`---i.e., a lowercase abbreviation with four letters, like a.b.c.d.--- and replace it with xxxx, you'd type
+
 	regex_adds = [[r"([a-z]\.){4}", "xxxx"]]
 	>>> abbr = Abbreviations(append=regex_adds)
 
 Finally, you may wish to throw out my entire abbreviations list and substitute your own. To do so, create a file with two comma-separated columns, the first of which contains the abbreviation and the second what replaces it. For example, assume I created such a file in my current working directory called `my_abbrvs.txt`. It would look something like this
+
 	"dog", "cat"
 	"pencil", "eraser"
 	"person", "human"
+
 To import this list instead of my abbreviations, use the `file` argument keyword:
+
 	>>> abbr = Abbreviations(file=my_abbrvs.txt)
 
 Finally, a note of warning. When defining abbreviations, do so carefully. For example, consider the substitution `[' pp.', ' pages']`. pp. is preceded by a space to prevent inadvertent deletion of an actual full stop. Without it, "This sentence ends with app." would become "This sentence ends with pages". Special care should be taken when using regular expressions, since their odd syntax may make it particularly easy to overlook such mistakes.
@@ -137,6 +150,7 @@ Since I couldn't find one already created, I had to make my own. To do so, I use
 In total, the generated list included over 14,000 words---many of which were gibberish. To get rid of nonsense (although, admittedly, including such words is probably harmless), the text of 94 English novels published online with Project Gutenberg were matched with words on the expanded list. Words not found in any of the novels were deleted.
 
 You may, however, wish to use your own list of Dale-Chall easy words---maybe one that only includes the 3,000 original words. If that's the case, make sure each word on your list is separated by a carriage return and then call the `EasyWordList` class object with the file argument. All `Textatistic` would then need to explicitly reference that list with the keyword argument `easy_words`. For example, if such a file named `my_words.txt` were in your current working directory, you'd import and use it like so
+
 	>>> from textatistic import EasyWordList, Textatistic
 	>>> my_easy_words = EasyWordList(file=my_words.txt)
 	>>> s = Textatistic(easy_words=my_easy_words)
