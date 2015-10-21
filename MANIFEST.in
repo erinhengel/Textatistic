@@ -1,0 +1,3 @@
+include README.txt
+include textatistic/abbreviations.txt
+include textatistic/dale_chall.txt
