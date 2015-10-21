@@ -1,4 +1,4 @@
-include README.rst
+include README.md
 include LICENSE
 include textatistic/abbreviations.txt
 include textatistic/dale_chall.txt
