@@ -10,7 +10,7 @@ setup(
     url='http://www.erinhengel.com/software/textatistic/',
     packages = ['textatistic'],
     install_requires=['pyhyphen>=2.0.5'],
-    package_data={'textatistic': ['abbreviations.txt', 'dale_chall.txt'], '': ['README.txt']},
+    package_data={'textatistic': ['abbreviations.txt', 'dale_chall.txt'], '': ['README.md', 'LICENSE']},
     package_dir={'textatistic': 'textatistic'},
     include_package_data=True,
     author_email='erin.hengel@gmail.com',
