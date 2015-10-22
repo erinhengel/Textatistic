@@ -23,7 +23,8 @@ Quickstart
 .. code-block:: python
 
 	>>> from textatistic import Textatistic
-	>>> s = TextStatistic('There was a king with a large jaw. There was a queen with a plain face.')
+	>>> text = 'There was a king with a large jaw. There was a queen with a plain face.'
+	>>> s = TextStatistic(text)
 
 ``s.dict()`` returns a dictionary containing the following values.
 
