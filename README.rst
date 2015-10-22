@@ -44,26 +44,28 @@ Quickstart
 Textatistic attributes
 ----------------------
 
+
 +-------------------+-----------------------------------------------------------------------+ 
-| Attribute		    | Function                                                              | 
+| Attribute         | Function                                                              | 
 +===================+=======================================================================+ 
 | ``dash_clean``    | replace em, en, etc. dashes with hyphens.                             | 
 +-------------------+-----------------------------------------------------------------------+ 
-| ``hyphen_single`` | remove hyphen in hyphenated single word, e.g., co-author.             |
-+-------------------+-----------------------------------------------------------------------+
-| ``decimal_strip`` | remove decimals and replace with plus sign (+).                       |
-+-------------------+-----------------------------------------------------------------------+
-| ``nonend_strip``  | remove punctuation used in an obvious mid-sentence rhetorical manner. |
-+-------------------+-----------------------------------------------------------------------+
-| ``abbrv_strip``   | replace abbreviations with their full text.                           |
-+-------------------+-----------------------------------------------------------------------+
-| ``punct_clean``   | apply all punctuation cleaning functions.                             |
-+-------------------+-----------------------------------------------------------------------+
-| ``word_array``    | generate list of words.                                               |
+| ``hyphen_single`` | remove hyphen in hyphenated single word, e.g., co-author.             | 
++-------------------+-----------------------------------------------------------------------+ 
+| ``decimal_strip`` | remove decimals and replace with plus sign (+).                       | 
++-------------------+-----------------------------------------------------------------------+ 
+| ``nonend_strip``  | remove punctuation used in an obvious mid-sentence rhetorical manner. | 
++-------------------+-----------------------------------------------------------------------+ 
+| ``abbrv_strip``   | replace abbreviations with their full text.                           | 
++-------------------+-----------------------------------------------------------------------+ 
+| ``punct_clean``   | apply all punctuation cleaning functions.                             | 
++-------------------+-----------------------------------------------------------------------+ 
+| ``word_array``    | generate list of words.                                               | 
 +-------------------+-----------------------------------------------------------------------+
 
+
 +------------+------------+-----------+ 
-| Header 1   | Header 2   | Header 3  | 
+| Attribute         | Header 2   | Header 3  | 
 +============+============+===========+ 
 | body row 1 | column 2   | column 3  | 
 +------------+------------+-----------+ 
