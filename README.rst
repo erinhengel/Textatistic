@@ -3,6 +3,11 @@ Textatistic
 
 Textatistic is a Python package to calculate the `Flesch Reading Ease <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Flesch-Kincaid <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Gunning Fog <https://en.wikipedia.org/wiki/Gunning_fog_index>`_, `Simple Measure of Gobbledygook <https://en.wikipedia.org/wiki/SMOG>`_ (SMOG) and `Dale-Chall <http://www.readabilityformulas.com/new-dale-chall-readability-formula.php>`_ readability indices. Additionally, it contains functions to count the number of sentences, characters, syllables and words, words with three or more syllables and words on an expanded Dale-Chall list of easy words.
 
+Documentation
+-------------
+
+Detailed documentation available at `www.erinhengel.com <http://www.erinhengel.com/software/textatistic/>`_. Only a very brief overview is provided here.
+
 Installation
 ------------
 
@@ -19,10 +24,8 @@ Quickstart
 
 	>>> from textatistic import Textatistic
 	>>> s = TextStatistic('There were a king with a large jaw and a queen with a plain face.')
-	>>> s.dict()
-	
-List of functions
------------------
+
+``s.dict()`` returns a dictionary containing the following values.
 
 - ``dash_clean``: replace em, en, etc. dashes with hyphens.
 - ``hyphen_single``: remove hyphen in hyphenated single word, e.g., co-author.
@@ -43,8 +46,3 @@ List of functions
 - ``gunning_fog``: calculate the Gunning Fog score.
 - ``smog``: calculate the SMOG score.
 - ``dale_chall``: calculate the Dale-Chall score.
-
-Documentation
--------------
-
-Documentation available at `www.erinhengel.com <http://www.erinhengel.com/software/textatistic/>`_.
