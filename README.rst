@@ -25,6 +25,9 @@ Quickstart
 	>>> from textatistic import Textatistic
 	>>> text = 'There was a king with a large jaw. There was a queen with a plain face.'
 	>>> s = TextStatistic(text)
+	>>> s.sent_count
+	2
+	...
 
 ``s.dict()`` returns a dictionary containing the following values.
 
