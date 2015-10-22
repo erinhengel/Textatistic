@@ -1,7 +1,7 @@
 Textatistic
 ===========
 
-Textatistic is a Python package to calculate the `Flesch Reading Ease <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`, [Flesch-Kincaid], [Gunning Fog], [Simple Measure of Gobbledygook] (SMOG) and [Dale-Chall] readability indices. Additionally, it contains functions to count the number of sentences, characters, syllables and words, words with three or more syllables and words on an expanded Dale-Chall list of easy words.
+Textatistic is a Python package to calculate the `Flesch Reading Ease <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Flesch-Kincaid <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Gunning Fog <https://en.wikipedia.org/wiki/Gunning_fog_index>`_, `Simple Measure of Gobbledygook <https://en.wikipedia.org/wiki/SMOG>`_ (SMOG) and `Dale-Chall <http://www.readabilityformulas.com/new-dale-chall-readability-formula.php>`_ readability indices. Additionally, it contains functions to count the number of sentences, characters, syllables and words, words with three or more syllables and words on an expanded Dale-Chall list of easy words.
 
 Installation
 ------------
@@ -38,13 +38,13 @@ List of functions
 - ``syblperword_count``: count number of syllables in a word.
 - ``sybl_count``: count number of syllables.
 - ``polysyblword_count``: count number of words with three or more syllables.
-- ``flesch``: calculate the [Flesch Reading Ease] score.
-- ``flesch_kincaid``: calculate the [Flesch-Kincaid] score.
-- ``gunning_fog``: calculate the [Gunning Fog] score.
-- ``smog``: calculate the [SMOG] score.
-- ``dale_chall``: calculate the [Dale-Chall] score.
+- ``flesch``: calculate the Flesch Reading Ease score.
+- ``flesch_kincaid``: calculate the Flesch-Kincaid score.
+- ``gunning_fog``: calculate the Gunning Fog score.
+- ``smog``: calculate the SMOG score.
+- ``dale_chall``: calculate the Dale-Chall score.
 
 Documentation
 -------------
 
-Documentation available at `www.erinhengel.com <http://www.erinhengel.com/software/textatistic/>`.
+Documentation available at `www.erinhengel.com <http://www.erinhengel.com/software/textatistic/>`_.
