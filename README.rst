@@ -1,7 +1,7 @@
 Textatistic
 ===========
 
-Textatistic is a Python package to calculate the [Flesch Reading Ease], [Flesch-Kincaid], [Gunning Fog], [Simple Measure of Gobbledygook] (SMOG) and [Dale-Chall] readability indices. Additionally, it contains functions to count the number of sentences, characters, syllables and words, words with three or more syllables and words on an expanded Dale-Chall list of easy words.
+Textatistic is a Python package to calculate the `Flesch Reading Ease <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`, [Flesch-Kincaid], [Gunning Fog], [Simple Measure of Gobbledygook] (SMOG) and [Dale-Chall] readability indices. Additionally, it contains functions to count the number of sentences, characters, syllables and words, words with three or more syllables and words on an expanded Dale-Chall list of easy words.
 
 Installation
 ------------
@@ -18,7 +18,7 @@ Quickstart
 .. code-block:: python
 
 	>>> from textatistic import Textatistic
-	>>> s = TextStatistic('There were a king with a large jaw and a queen with a plain face, on the throne of England; there were a king with a large jaw and a queen with a fair face, on the throne of France. In both countries it was clearer than crystal to the lords of the State preserves of loaves and fishes, that things in general were settled for ever.')
+	>>> s = TextStatistic('There were a king with a large jaw and a queen with a plain face.')
 	>>> s.dict()
 	
 List of functions
@@ -47,4 +47,4 @@ List of functions
 Documentation
 -------------
 
-Documentation is available at http://www.erinhengel.com/software/textatistic/.
+Documentation available at `www.erinhengel.com <http://www.erinhengel.com/software/textatistic/>`.
