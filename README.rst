@@ -24,31 +24,44 @@ Quickstart
 
 	>>> from textatistic import Textatistic
 	
-	# generate object with all readability statistics.
+	# Generate object with all readability statistics.
 	>>> text = 'There was a king with a large jaw. There was a queen with a plain face.'
 	>>> s = Textatistic(text)
 	
-	# return sentence count.
+	# Return sentence count.
 	>>> s.sent_count
 	2
 	
-	# return Flesch Reading Ease.
+	# Return Flesch Reading Ease.
 	>>> s.flesch
 	114.11500000000001
 	
-	# return dictionary of all values in s.
+	# Return dictionary of all values in s.
+	>>> s.dict()
 	{'sybl_count': 16, 'char_count': 56, 'word_count': 16, 'counts': {'sybl_count': 16, 'polysyblword_count': 0, 'dalechall_count': 0, 'word_count': 16, 'sent_count': 2}, 'polysyblword_count': 0, 'gunning_fog': 3.2, 'dalechall_count': 0, 'scores': {'gunning_fog': 3.2, 'flesch': 114.11500000000001, 'flesch_kincaid': -0.6699999999999982, 'smog': 3.1291, 'dale_chall': 0.3968}, 'flesch_kincaid': -0.6699999999999982, 'flesch': 114.11500000000001, 'sent_count': 2, 'dale_chall': 0.3968, 'smog': 3.1291}
 	
 
-``s`` contains the following values.
+Textatistic attributes
+----------------------
++-------------------+-----------------------------------------------------------------------+
+| Attribute		    | Function                                                              |
++===================+=======================================================================+
+| ``dash_clean``    | replace em, en, etc. dashes with hyphens.                             |
++-------------------+-----------------------------------------------------------------------+
+| ``hyphen_single`` | remove hyphen in hyphenated single word, e.g., co-author.             +
++-------------------+-----------------------------------------------------------------------+
+| ``decimal_strip`` | remove decimals and replace with plus sign (+).                       |
++-------------------+-----------------------------------------------------------------------+
+| ``nonend_strip``  | remove punctuation used in an obvious mid-sentence rhetorical manner. |
++-------------------+-----------------------------------------------------------------------+
+| ``abbrv_strip``   | replace abbreviations with their full text.                           |
++-------------------+-----------------------------------------------------------------------+
+| ``punct_clean``   | apply all punctuation cleaning functions.                             |
++-------------------+-----------------------------------------------------------------------+
+| ``word_array``    | generate list of words.                                               |
++-------------------+-----------------------------------------------------------------------+
 
-- ``dash_clean``: replace em, en, etc. dashes with hyphens.
-- ``hyphen_single``: remove hyphen in hyphenated single word, e.g., co-author.
-- ``decimal_strip``: remove decimals and replace with plus sign (+).
-- ``nonend_strip``: remove punctuation used in an obvious mid-sentence rhetorical manner.
-- ``abbrv_strip``: replace abbreviations with their full text.
-- ``punct_clean``: apply all punctuation cleaning functions.
-- ``word_array``: generate list of words.
+
 - ``sent_count``: count number of sentences.
 - ``char_count``: count number of non-space characters.
 - ``word_count``: count number of words.
