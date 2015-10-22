@@ -1,12 +1,12 @@
 Textatistic
 ===========
 
-Textatistic is a Python package to calculate the `Flesch Reading Ease <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Flesch-Kincaid <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Gunning Fog <https://en.wikipedia.org/wiki/Gunning_fog_index>`_, `Simple Measure of Gobbledygook <https://en.wikipedia.org/wiki/SMOG>`_ (SMOG) and `Dale-Chall <http://www.readabilityformulas.com/new-dale-chall-readability-formula.php>`_ readability indices. Additionally, it contains functions to count the number of sentences, characters, syllables and words, words with three or more syllables and words on an expanded Dale-Chall list of easy words.
+``Textatistic`` is a Python package to calculate the `Flesch Reading Ease <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Flesch-Kincaid <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Gunning Fog <https://en.wikipedia.org/wiki/Gunning_fog_index>`_, `Simple Measure of Gobbledygook <https://en.wikipedia.org/wiki/SMOG>`_ (SMOG) and `Dale-Chall <http://www.readabilityformulas.com/new-dale-chall-readability-formula.php>`_ readability indices. Additionally, it contains functions to count the number of sentences, characters, syllables and words, words with three or more syllables and words on an expanded Dale-Chall list of easy words.
 
 Documentation
 -------------
 
-Detailed documentation available at `www.erinhengel.com <http://www.erinhengel.com/software/textatistic/>`_. Only a very brief overview is provided here.
+Detailed documentation available at `erinhengel.com <http://www.erinhengel.com/software/textatistic/>`_. Source code on `GitHub.com <https://github.com/erinhengel/Textatistic>`_.
 
 Installation
 ------------
@@ -23,12 +23,22 @@ Quickstart
 .. code-block:: python
 
 	>>> from textatistic import Textatistic
+	
+	# generate object with all readability statistics.
 	>>> text = 'There was a king with a large jaw. There was a queen with a plain face.'
 	>>> s = Textatistic(text)
+	
+	# return sentence count.
 	>>> s.sent_count
 	2
+	
+	# return Flesch Reading Ease.
 	>>> s.flesch
-	...
+	114.11500000000001
+	
+	# return dictionary of all values in s.
+	{'sybl_count': 16, 'char_count': 56, 'word_count': 16, 'counts': {'sybl_count': 16, 'polysyblword_count': 0, 'dalechall_count': 0, 'word_count': 16, 'sent_count': 2}, 'polysyblword_count': 0, 'gunning_fog': 3.2, 'dalechall_count': 0, 'scores': {'gunning_fog': 3.2, 'flesch': 114.11500000000001, 'flesch_kincaid': -0.6699999999999982, 'smog': 3.1291, 'dale_chall': 0.3968}, 'flesch_kincaid': -0.6699999999999982, 'flesch': 114.11500000000001, 'sent_count': 2, 'dale_chall': 0.3968, 'smog': 3.1291}
+	
 
 ``s`` contains the following values.
 
