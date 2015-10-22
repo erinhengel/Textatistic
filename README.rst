@@ -8,8 +8,7 @@ Installation
 
 To install Textatistic, simply:
 	
-.. code-block:: ruby
-
+.. code-block:: bash
 	$ pip install textatistic
 
 Quickstart
