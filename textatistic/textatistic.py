@@ -48,18 +48,18 @@ class Textatistic(object):
         
         text = word_array(text, abbr, True)
         self.word_count = word_count(text, abbr, True)
-        self.dale_chall_list_count = dale_chall_list_count(text, abbr, easy, True)
+        self.dalechall_count = dalechall_count(text, abbr, easy, True)
         
-        sybl_list = sybl_count(text, abbr, hyphen, True)
+        sybl_list = sybl_counts(text, abbr, hyphen, True)
         self.sybl_count = sybl_list['sybl_count']
-        self.poly_sybl_word_count = sybl_list['poly_sybl_word_count']
+        self.polysyblword_count = sybl_list['polysyblword_count']
         
         self.counts = {
-            'word': self.word_count,
-            'sentence': self.sent_count,
-            'syllable': self.sybl_count,
-            'dale_chall_list': self.dale_chall_list_count,
-            'poly_sybl_word': self.poly_sybl_word_count
+            'word_count': self.word_count,
+            'sent_count': self.sent_count,
+            'sybl_count': self.sybl_count,
+            'dalechall_count': self.dalechall_count,
+            'polysyblword_count': self.polysyblword_count
         }
         
         self.flesch = flesch(vars=self.counts)
@@ -80,7 +80,7 @@ class Textatistic(object):
         return self.__dict__
         
 def dash_clean(text):
-    """Replace em, en, etc. dashes with hypens."""
+    """Replace em, en, etc. dashes with hyphens."""
     text = text.replace("–", "-")
     text = text.replace("—", "-")
     return text
@@ -95,7 +95,7 @@ def hyphen_single(text, prepped=False):
 
 
 def decimal_strip(text):
-    """Remove decimals and replace with +."""
+    """Remove decimals and replace with plus sign (+)."""
     return re.sub("\.([0-9])", "+\\1", text)
     
 
@@ -126,33 +126,34 @@ def punct_clean(text, abbr=Abbreviations()):
     
     
 def word_array(text, abbr=Abbreviations(), prepped=False):
-    """Generate list of words in text."""
+    """Generate list of words."""
     if not prepped:
         text = punct_clean(text, abbr)
     return text.replace("-", ' ').translate(str.maketrans("", "", string.punctuation)).split()
     
 
 def sent_count(text, abbr=Abbreviations(), prepped=False):
-    """Count number of sentences in text."""
+    """Count number of sentences."""
     if not prepped:
         text = punct_clean(text, abbr)
     return text.count('.') + text.count('!') + text.count('?')
 
 
 def char_count(text, abbr=Abbreviations(), prepped=False):
+    """Count number of non-space characters."""
     if not prepped:
         text = punct_clean(text, abbr)
     return len(''.join(text.split()))
 
 
 def word_count(text, abbr=Abbreviations(), prepped=False):
-    """Count number of words in text."""
+    """Count number of words."""
     if not prepped:
         text = word_array(punct_clean(text, abbr), abbr, prepped=True)
     return len(text)
 
 
-def dale_chall_list_count(text, abbr=Abbreviations(), easy=EasyWordList(), prepped=False):
+def dalechall_count(text, abbr=Abbreviations(), easy=EasyWordList(), prepped=False):
     """Count number of words on Dale-Chall list."""
     if not prepped:
         text = word_array(punct_clean(text, abbr), abbr, True)
@@ -174,20 +175,20 @@ def syblperword_count(word, hyphen=Hyphenator('en_US')):
     return max(1, len(hyphen.syllables(word)))
 
 
-def sybl_count(text, abbr=Abbreviations(), hyphen=Hyphenator('en_US'), prepped=False):
+def sybl_counts(text, abbr=Abbreviations(), hyphen=Hyphenator('en_US'), prepped=False):
     """Count number of syllables in text, return in sybl_count;
-    Count number of words with three or more syllables, return
-    in poly_sybl_word_count.
+    count number of words with three or more syllables, return
+    in polysyblword_count.
     """
     if not prepped:
         text = word_array(punct_clean(text, abbr), abbr, True)
     sybl_count = 0
-    poly_sybl_word_count = 0
+    polysyblword_count = 0
     for word in text:
         syblperword_c = syblperword_count(word, hyphen)
         sybl_count += syblperword_c
-        if syblperword_c >= 3: poly_sybl_word_count += 1
-    return {'sybl_count': sybl_count, 'poly_sybl_word_count': poly_sybl_word_count}
+        if syblperword_c >= 3: polysyblword_count += 1
+    return {'sybl_count': sybl_count, 'polysyblword_count': polysyblword_count}
 
 
 def flesch(text=None, abbr=None, hyphen=None, vars={}):
@@ -198,11 +199,11 @@ def flesch(text=None, abbr=None, hyphen=None, vars={}):
         if not hyphen:
             hyphen = Hyphenator('en_US')
         text = punct_clean(text, abbr)
-        vars['sentence'] = sent_count(text, abbr, True)
+        vars['sent_count'] = sent_count(text, abbr, True)
         text = word_array(text, abbr, True)
-        vars['word'] = word_count(text, abbr, True)
-        vars['syllable'] = sybl_count(text, abbr, hyphen, True)['sybl_count']
-    return 206.835 - 1.015 * (vars['word'] / vars['sentence']) - 84.6 * (vars['syllable'] / vars['word'])
+        vars['word_count'] = word_count(text, abbr, True)
+        vars['sybl_count'] = sybl_counts(text, abbr, hyphen, True)['sybl_count']
+    return 206.835 - 1.015 * (vars['word_count'] / vars['sent_count']) - 84.6 * (vars['sybl_count'] / vars['word_count'])
 
 
 def flesch_kincaid(text=None, abbr=None, hyphen=None, vars={}):
@@ -213,11 +214,11 @@ def flesch_kincaid(text=None, abbr=None, hyphen=None, vars={}):
         if not hyphen:
             hyphen = Hyphenator('en_US')
         text = punct_clean(text, abbr)
-        vars['sentence'] = sent_count(text, abbr, True)
+        vars['sent_count'] = sent_count(text, abbr, True)
         text = word_array(text, abbr, True)
-        vars['word'] = word_count(text, abbr, True)
-        vars['syllable'] = sybl_count(text, abbr, hyphen, True)['sybl_count']
-    return 0.39 * (vars['word'] / vars['sentence']) + 11.8 * (vars['syllable'] / vars['word']) - 15.59
+        vars['word_count'] = word_count(text, abbr, True)
+        vars['sybl_count'] = sybl_counts(text, abbr, hyphen, True)['sybl_count']
+    return 0.39 * (vars['word_count'] / vars['sent_count']) + 11.8 * (vars['sybl_count'] / vars['word_count']) - 15.59
     
     
 def gunning_fog(text=None, abbr=None, hyphen=None, vars={}):
@@ -228,11 +229,11 @@ def gunning_fog(text=None, abbr=None, hyphen=None, vars={}):
         if not hyphen:
             hyphen = Hyphenator('en_US')
         text = punct_clean(text, abbr)
-        vars['sentence'] = sent_count(text, abbr, True)
+        vars['sent_count'] = sent_count(text, abbr, True)
         text = word_array(text, abbr, True)
-        vars['word'] = word_count(text, abbr, True)
-        vars['poly_sybl_word'] = sybl_count(text, abbr, hyphen, True)['poly_sybl_word_count']
-    return 0.4 * ((vars['word'] / vars['sentence']) + 100 * (vars['poly_sybl_word'] / vars['word']))
+        vars['word_count'] = word_count(text, abbr, True)
+        vars['polysyblword_count'] = sybl_counts(text, abbr, hyphen, True)['polysyblword_count']
+    return 0.4 * ((vars['word_count'] / vars['sent_count']) + 100 * (vars['polysyblword_count'] / vars['word_count']))
     
     
 def smog(text=None, abbr=None, hyphen=None, vars={}):
@@ -243,10 +244,10 @@ def smog(text=None, abbr=None, hyphen=None, vars={}):
         if not hyphen:
             hyphen = Hyphenator('en_US')
         text = punct_clean(text, abbr)
-        vars['sentence'] = sent_count(text, abbr, True)
+        vars['sent_count'] = sent_count(text, abbr, True)
         text = word_array(text, abbr, True)
-        vars['poly_sybl_word'] = sybl_count(text, abbr, hyphen, True)['poly_sybl_word_count']
-    return 1.0430 * sqrt(vars['poly_sybl_word'] * (30 / vars['sentence'])) + 3.1291
+        vars['polysyblword_count'] = sybl_counts(text, abbr, hyphen, True)['polysyblword_count']
+    return 1.0430 * sqrt(vars['polysyblword_count'] * (30 / vars['sent_count'])) + 3.1291
     
     
 def dale_chall(text=None, abbr=None, easy=None, vars={}):
@@ -257,12 +258,12 @@ def dale_chall(text=None, abbr=None, easy=None, vars={}):
         if not easy:
             easy = EasyWordList()
         text = punct_clean(text, abbr)
-        vars['sentence'] = sent_count(text, abbr, True)
+        vars['sent_count'] = sent_count(text, abbr, True)
         text = word_array(text, abbr, True)
-        vars['word'] = word_count(text, abbr, True)
-        vars['dale_chall_list'] = dale_chall_list_count(text, abbr, easy, True)
+        vars['word_count'] = word_count(text, abbr, True)
+        vars['dalechall_count'] = dalechall_count(text, abbr, easy, True)
     cons = 0
-    if vars['dale_chall_list'] / vars['word'] > 0.05:
+    if vars['dalechall_count'] / vars['word_count'] > 0.05:
         cons = 3.6365
-    return cons + 15.79 * (vars['dale_chall_list'] / vars['word']) + 0.0496 * (vars['word'] / vars['sentence'])
+    return cons + 15.79 * (vars['dalechall_count'] / vars['word_count']) + 0.0496 * (vars['word_count'] / vars['sent_count'])
 

@@ -16,10 +16,4 @@ setup(
     author_email='erin.hengel@gmail.com',
     license='Apache 2.0',
     zip_safe=False,
-    classifiers=(
-        'Natural Language :: English',
-        'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3.4'
-    ),
 )
