@@ -27,6 +27,8 @@ Quickstart
 	>>> s = Textatistic(text)
 	>>> s.sent_count
 	2
+	>>> s.flesch
+	...
 
 ``s`` contains the following values.
 
