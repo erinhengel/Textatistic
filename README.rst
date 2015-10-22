@@ -9,6 +9,7 @@ Installation
 To install Textatistic, simply:
 	
 .. code-block:: bash
+
 	$ pip install textatistic
 
 Quickstart
