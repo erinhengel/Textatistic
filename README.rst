@@ -36,20 +36,20 @@ Quickstart
 	>>> s.flesch
 	114.11500000000001
 	
-	# Return dictionary of all values in s.
+	# Return dictionary of all attribute values.
 	>>> s.dict()
-	{'sybl_count': 16, 'char_count': 56, 'word_count': 16, 'counts': {'sybl_count': 16, 'polysyblword_count': 0, 'dalechall_count': 0, 'word_count': 16, 'sent_count': 2}, 'polysyblword_count': 0, 'gunning_fog': 3.2, 'dalechall_count': 0, 'scores': {'gunning_fog': 3.2, 'flesch': 114.11500000000001, 'flesch_kincaid': -0.6699999999999982, 'smog': 3.1291, 'dale_chall': 0.3968}, 'flesch_kincaid': -0.6699999999999982, 'flesch': 114.11500000000001, 'sent_count': 2, 'dale_chall': 0.3968, 'smog': 3.1291}
+	...
 	
 
 Textatistic attributes
 ----------------------
 
-+-------------------+-----------------------------------------------------------------------+
-| Attribute		    | Function                                                              |
-+===================+=======================================================================+
-| ``dash_clean``    | replace em, en, etc. dashes with hyphens.                             |
-+-------------------+-----------------------------------------------------------------------+
-| ``hyphen_single`` | remove hyphen in hyphenated single word, e.g., co-author.             +
++-------------------+-----------------------------------------------------------------------+ 
+| Attribute		    | Function                                                              | 
++===================+=======================================================================+ 
+| ``dash_clean``    | replace em, en, etc. dashes with hyphens.                             | 
++-------------------+-----------------------------------------------------------------------+ 
+| ``hyphen_single`` | remove hyphen in hyphenated single word, e.g., co-author.             |
 +-------------------+-----------------------------------------------------------------------+
 | ``decimal_strip`` | remove decimals and replace with plus sign (+).                       |
 +-------------------+-----------------------------------------------------------------------+
