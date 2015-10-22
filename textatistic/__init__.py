@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 """
-Textatistic is a simple program, written in Python, to calculate common readability indices and text characteristics. Basic usage:
+Textatistic is a simple program, written in Python, to calculate common
+readability indices and text characteristics. Basic usage:
 
     >>> from textatistics import Textatistics
     >>> s = TextStatistic('A lot of text.')
