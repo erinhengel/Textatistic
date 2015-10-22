@@ -45,35 +45,38 @@ Textatistic attributes
 ----------------------
 
 
-+-------------------+-----------------------------------------------------------------------+ 
-| Attribute         | Function                                                              | 
-+===================+=======================================================================+ 
-| ``dash_clean``    | replace em, en, etc. dashes with hyphens.                             | 
-+-------------------+-----------------------------------------------------------------------+ 
-| ``hyphen_single`` | remove hyphen in hyphenated single word, e.g., co-author.             | 
-+-------------------+-----------------------------------------------------------------------+ 
-| ``decimal_strip`` | remove decimals and replace with plus sign (+).                       | 
-+-------------------+-----------------------------------------------------------------------+ 
-| ``nonend_strip``  | remove punctuation used in an obvious mid-sentence rhetorical manner. | 
-+-------------------+-----------------------------------------------------------------------+ 
-| ``abbrv_strip``   | replace abbreviations with their full text.                           | 
-+-------------------+-----------------------------------------------------------------------+ 
-| ``punct_clean``   | apply all punctuation cleaning functions.                             | 
-+-------------------+-----------------------------------------------------------------------+ 
-| ``word_array``    | generate list of words.                                               | 
-+-------------------+-----------------------------------------------------------------------+
-| ``sent_count``    | count number of sentences.                                            | 
-+-------------------+-----------------------------------------------------------------------+
-| ``char_count``    | count number of non-space characters.                                 | 
-+-------------------+-----------------------------------------------------------------------+
++-----------------------+-----------------------------------------------------------------------+ 
+| Attribute             | Function                                                              | 
++=======================+=======================================================================+ 
+| ``dash_clean``        | replace em, en, etc. dashes with hyphens.                             | 
++-----------------------+-----------------------------------------------------------------------+ 
+| ``hyphen_single``     | remove hyphen in hyphenated single word, e.g., co-author.             | 
++-----------------------+-----------------------------------------------------------------------+ 
+| ``decimal_strip``     | remove decimals and replace with plus sign (+).                       | 
++-----------------------+-----------------------------------------------------------------------+ 
+| ``nonend_strip``      | remove punctuation used in an obvious mid-sentence rhetorical manner. | 
++-----------------------+-----------------------------------------------------------------------+ 
+| ``abbrv_strip``       | replace abbreviations with their full text.                           | 
++-----------------------+-----------------------------------------------------------------------+ 
+| ``punct_clean``       | apply all punctuation cleaning functions.                             | 
++-----------------------+-----------------------------------------------------------------------+ 
+| ``word_array``        | generate list of words.                                               | 
++-----------------------+-----------------------------------------------------------------------+
+| ``sent_count``        | count number of sentences.                                            | 
++-----------------------+-----------------------------------------------------------------------+
+| ``char_count``        | count number of non-space characters.                                 | 
++-----------------------+-----------------------------------------------------------------------+
+| ``word_count``        | count number of words.                                                | 
++-----------------------+-----------------------------------------------------------------------+
+| ``dalechall_count``   | count number of words on Dale-Chall list.                             | 
++-----------------------+-----------------------------------------------------------------------+
+| ``syblperword_count`` | count number of syllables in a word.                                  | 
++-----------------------+-----------------------------------------------------------------------+
+| ``sybl_count``        | count number of syllables.                                            | 
++-----------------------+-----------------------------------------------------------------------+
 
 
 
-
-- ``word_count``: count number of words.
-- ``dalechall_count``: count number of words on Dale-Chall list.
-- ``syblperword_count``: count number of syllables in a word.
-- ``sybl_count``: count number of syllables.
 - ``polysyblword_count``: count number of words with three or more syllables.
 - ``flesch``: calculate the Flesch Reading Ease score.
 - ``flesch_kincaid``: calculate the Flesch-Kincaid score.
