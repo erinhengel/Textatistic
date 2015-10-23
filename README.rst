@@ -5,8 +5,6 @@ Textatistic
 
 Installation
 ------------
-
-To install ``Textatistic``, use` ``pip`` <https://pip.pypa.io>`_:
 	
 .. code-block:: bash
 
@@ -43,8 +41,8 @@ Quickstart
 	>>> s.dict()
 	...
 	
-The following table lists attributes in ``s``.
-
+Table of attributes
++++++++++++++++++++
 
 +-------------------------+-----------------------------------------------------------------------+ 
 | attribute               | function                                                              | 
