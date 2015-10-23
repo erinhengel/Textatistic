@@ -47,27 +47,27 @@ Table of attributes
 +-------------------------+-----------------------------------------------------------------------+ 
 | attribute               | function                                                              | 
 +=========================+=======================================================================+ 
-| ``char_count``          | count number of non-space characters.                                 | 
+| ``char_count``          | number of non-space characters.                                       | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``notdalechall_count``  | count number of words not on Dale-Chall list.                         | 
+| ``notdalechall_count``  | number of words not on Dale-Chall list.                               | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``polysyblword_count``  | calculate the Flesch Reading Ease score.                              | 
+| ``polysyblword_count``  | number of words with 3 or more syllables.                             | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``sent_count``          | count number of sentences.                                            | 
+| ``sent_count``          | number of sentences.                                                  | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``sybl_count``          | count number of syllables.                                            | 
+| ``sybl_count``          | number of syllables.                                                  | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``word_count``          | count number of words.                                                | 
+| ``word_count``          | number of words.                                                      | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``dalechall_score``     | calculate the Dale-Chall score.                                       | 
+| ``dalechall_score``     | Dale-Chall score.                                                     | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``flesch_score``        | calculate the Flesch Reading Ease score.                              | 
+| ``flesch_score``        | Flesch Reading Ease score.                                            | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``fleschkincaid_score`` | calculate the Flesch-Kincaid score.                                   | 
+| ``fleschkincaid_score`` | Flesch-Kincaid score.                                                 | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``gunningfog_score``    | calculate the Gunning Fog score.                                      | 
+| ``gunningfog_score``    | Gunning Fog score.                                                    | 
 +-------------------------+-----------------------------------------------------------------------+
-| ``smog_score``          | calculate the SMOG score.                                             | 
+| ``smog_score``          | SMOG score.                                                           | 
 +-------------------------+-----------------------------------------------------------------------+
 
 
