@@ -5,6 +5,11 @@ readability indices and text characteristics. Basic usage:
 
     >>> from textatistics import Textatistics
     >>> s = TextStatistic('A lot of text.')
+    ...
+    >>> s.counts
+    ...
+    >>> s.scores
+    ...
     
 Full documentation at <http://www.erinhengel.com/software/textatistic>.
 
