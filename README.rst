@@ -28,13 +28,20 @@ Quickstart
 	2
 	
 	# Return Flesch Reading Ease.
-	>>> s.flesch
+	>>> s.flesch_score
 	114.11500000000001
+	
+	# Return dictionary of character/word/syllable counts.
+	>>> s.counts
+	{'sent_count': 2, 'word_count': 16, 'char_count': 56, 'sybl_count': 16, 'notdalechall_count': 0, 'polysyblword_count': 0}
+	
+	# Return dictionary of readability scores.
+	>>> s.scores
+	{'flesch_score': 114.11500000000001, 'fleschkincaid_score': -0.6699999999999982, 'gunningfog_score': 3.2, 'smog_score': 3.1291, 'dalechall_score': 0.3968}
 	
 	# Return dictionary of all attribute values.
 	>>> s.dict()
 	...
-	
 	
 The following table lists attributes in ``s``.
 

@@ -77,7 +77,7 @@ class Textatistic(object):
         }
     
     def dict(self):
-        dict = self.counts
+        dict = self.counts.copy()
         dict.update(self.scores)
         return dict
 
