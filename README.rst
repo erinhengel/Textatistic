@@ -6,7 +6,7 @@ Textatistic
 Installation
 ------------
 
-To install Textatistic, simply:
+To install ``Textatistic``, use` ``pip`` <https://pip.pypa.io>`_:
 	
 .. code-block:: bash
 
@@ -19,7 +19,7 @@ Quickstart
 
 	>>> from textatistic import Textatistic
 	
-	# Generate object with all readability statistics.
+	# Generate object of readability statistics.
 	>>> text = 'There was a king with a large jaw. There was a queen with a plain face.'
 	>>> s = Textatistic(text)
 	
@@ -27,7 +27,7 @@ Quickstart
 	>>> s.sent_count
 	2
 	
-	# Return Flesch Reading Ease.
+	# Return Flesch Reading Ease score.
 	>>> s.flesch_score
 	114.11500000000001
 	
