@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='textatistic',
-    version='0.3',
+    version='0.4',
     description='Calculate readability scores (Flesch Reading Ease, etc.).',
     author='Erin Hengel',
     url='http://www.erinhengel.com/software/textatistic/',

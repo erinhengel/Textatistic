@@ -19,7 +19,7 @@ Full documentation at <http://www.erinhengel.com/software/textatistic>.
 """
 
 __title__ = 'textatistic'
-__version__ = '0.1'
+__version__ = '0.0.1'
 __author__ = 'Erin Hengel'
 __license__ = 'Apache 2.0'
 __copyright__ = 'Copyright 2015 Erin Hengel'
