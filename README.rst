@@ -3,12 +3,20 @@ Textatistic
 
 Textatistic is a Python package to calculate the `Flesch Reading Ease <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Flesch-Kincaid <https://en.wikipedia.org/wiki/Flesch–Kincaid_readability_tests>`_, `Gunning Fog <https://en.wikipedia.org/wiki/Gunning_fog_index>`_, `Simple Measure of Gobbledygook <https://en.wikipedia.org/wiki/SMOG>`_ (SMOG) and `Dale-Chall <http://www.readabilityformulas.com/new-dale-chall-readability-formula.php>`_ readability indices. Textatistic also contains functions to count the number of sentences, characters, syllables, words, words with three or more syllables and words on an expanded Dale-Chall list of easy words.
 
+
 Installation
 ------------
 	
 .. code-block:: bash
 
 	$ pip install textatistic
+
+
+Documentation
+-------------
+
+Detailed documentation available at `erinhengel.com <http://www.erinhengel.com/software/textatistic/>`_. 
+
 
 Quickstart
 ----------
@@ -68,8 +76,3 @@ Table of attributes
 +-------------------------+-----------------------------------------------------------------------------------+
 | ``smog_score``          | SMOG score.                                                                       | 
 +-------------------------+-----------------------------------------------------------------------------------+
-
-Documentation
--------------
-
-Detailed documentation available at `erinhengel.com <http://www.erinhengel.com/software/textatistic/>`_. 
